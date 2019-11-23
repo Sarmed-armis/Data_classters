@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Classter;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,26 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+
+        /*
+         *
+        for($x=1;$x<=11;$x++){
+            for($y=1;$y<=14;$y++){
+                Classter::create([
+                    'x_axis'=>$x,
+                    'y_axis'=>$y,
+                    'comment'=>'unvisited'
+                ]);
+            }
+
+        }
+        */
+        $unvisiteds=Classter::where('comment','=','unvisited')->get();
+
+
+        $visiteds=Classter::where('comment','=','visited')->get();
+
+        return view('home',compact('unvisiteds','visiteds'));
     }
 }

@@ -77,4 +77,10 @@
         </main>
     </div>
 </body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+@yield('javascript')
+
 </html>
