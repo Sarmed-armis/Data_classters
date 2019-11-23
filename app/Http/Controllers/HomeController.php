@@ -104,14 +104,12 @@ class HomeController extends Controller
         $ss=$dbscan->cluster($samples2);
 
 
-if (!empty( $ss ))
-{
 
     foreach ($ss[0] as $s){
         Classter::where('x_axis','=',$s[0])->where('y_axis','=',$s[1])->update(['comment'=>'unvisited']);
     }
 
-}
+
 
 
 
@@ -162,13 +160,14 @@ if (!empty( $ss ))
         $dbscan = new DBSCAN($epsilon = $request->ex, $minSamples =$request->min);
         $ss=$dbscan->cluster($samples2);
 
+        if (!empty( $ss )) {
 
 
-        foreach ($ss[0] as $s){
-            Classter::where('x_axis','=',$s[1])->where('y_axis','=',$s[0])->update(['comment'=>'visited']);
+            foreach ($ss[0] as $s) {
+                Classter::where('x_axis', '=', $s[0])->where('y_axis', '=', $s[1])->update(['comment' => 'visited']);
+            }
+
         }
-
-
 
 
         return redirect('home');
