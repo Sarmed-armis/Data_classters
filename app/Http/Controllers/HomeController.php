@@ -99,14 +99,19 @@ class HomeController extends Controller
 
 
 
+
         $dbscan = new DBSCAN($epsilon = 2, $minSamples =3);
         $ss=$dbscan->cluster($samples2);
 
 
+if (!empty( $ss ))
+{
 
-        foreach ($ss[0] as $s){
-            Classter::where('x_axis','=',$s[0])->where('y_axis','=',$s[1])->update(['comment'=>'unvisited']);
-        }
+    foreach ($ss[0] as $s){
+        Classter::where('x_axis','=',$s[0])->where('y_axis','=',$s[1])->update(['comment'=>'unvisited']);
+    }
+
+}
 
 
 
