@@ -20,6 +20,7 @@
                             <div class="row my-3">
                                 <div class="col">
                                     <h4>Datasets</h4>
+                                    <a href="{{url('reset')}}" class=" btn btn-danger">Reset</a>
                                 </div>
                             </div>
                             <div class="row my-2">
@@ -54,10 +55,36 @@
 
 
 
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+
+
                     <div class="container">
                         <div class="row my-3">
                             <div class="col">
                                 <h4>Datasets</h4>
+                                <form method="post" action="{{url('store')}}">
+                                    @csrf
+                                    <div class = "form-group">
+                                        <input type = "text"  name="min" class = "form-control" id = "name" placeholder = "min">
+                                    </div>
+                                    <div class = "form-group">
+
+                                        <input type = "text"  name="ex" class = "form-control" id = "name" placeholder = "ex">
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success">Submit</button>
+
+                                </form>
                             </div>
                         </div>
                         <div class="row my-2">
