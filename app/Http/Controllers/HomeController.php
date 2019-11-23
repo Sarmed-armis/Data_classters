@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Phpml\Clustering\DBSCAN;
+
 
 use Illuminate\Http\Request;
 use App\Classter;
@@ -25,6 +27,32 @@ class HomeController extends Controller
     public function index()
     {
 
+        $datasets=Classter::select('x_axis','y_axis')->get();
+        //$datasets=Classter::where('comment','=','unvisited')->select('x_axis','y_axis')->get();
+
+
+        $samples2=[];
+        foreach ($datasets as $dataset ){
+
+
+            array_push($samples2,array($dataset->x_axis,$dataset->y_axis));
+        }
+
+
+
+
+
+
+        $dbscan = new DBSCAN($epsilon = 2, $minSamples =3);
+        $ss=$dbscan->cluster($samples2);
+
+
+
+        foreach ($ss[0] as $s){
+            Classter::where('x_axis','=',$s[1])->where('y_axis','=',$s[0])->update(['comment'=>'visited']);
+        }
+
+
 
         /*
          *
@@ -43,6 +71,7 @@ class HomeController extends Controller
 
 
         $visiteds=Classter::where('comment','=','visited')->get();
+
 
         return view('home',compact('unvisiteds','visiteds'));
     }
